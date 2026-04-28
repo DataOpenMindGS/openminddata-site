@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open Mind Data – About Us</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:#090d12; --bg2:#0f1419; --bg3:#161c24; --bg4:#1d2630;
+    --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.13);
+    --accent:#00e5a0; --accent2:#00b87a; --accent-dim:rgba(0,229,160,0.12);
+    --red:#ff4d6d; --amber:#f0a500; --blue:#4da6ff;
+    --text:#f0f2f5; --text2:#c8cdd4; --text3:#8a9099;
+    --mono:'IBM Plex Mono',monospace; --sans:'IBM Plex Sans',sans-serif; --radius:10px;
+  }
+  html, body { min-height:100%; background:var(--bg); color:var(--text); font-family:var(--sans); font-size:14px; line-height:1.6; }
+  #app { display:flex; flex-direction:column; min-height:100vh; }
+
+  /* ── Site Nav ── */
+  #site-nav { display:flex; align-items:center; justify-content:space-between; padding:0 16px; height:42px; background:var(--bg2); border-bottom:1px solid rgba(255,255,255,0.1); flex-shrink:0; position:sticky; top:0; z-index:200; }
+  .site-nav-left { display:flex; align-items:center; gap:10px; }
+  .site-nav-logo { width:24px; height:24px; background:var(--accent); border-radius:5px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .site-nav-brand { font-family:var(--mono); font-size:11px; font-weight:500; letter-spacing:0.1em; color:var(--text); white-space:nowrap; }
+  .site-nav-divider { width:1px; height:16px; background:var(--border2); margin:0 6px; }
+  .site-nav-links { display:flex; align-items:center; gap:2px; }
+  .site-nav-links a { font-family:var(--mono); font-size:10px; letter-spacing:0.07em; color:var(--text3); text-decoration:none; padding:4px 9px; border-radius:5px; border:1px solid transparent; transition:color 0.15s,background 0.15s,border-color 0.15s; white-space:nowrap; }
+  .site-nav-links a:hover { color:var(--accent); background:var(--accent-dim); }
+  .site-nav-links a.active { color:var(--accent); background:var(--accent-dim); border-color:rgba(0,229,160,0.22); }
+  .site-nav-right { display:flex; align-items:center; }
+
+  /* ── Page header ── */
+  #page-header { padding:56px 24px 48px; max-width:860px; margin:0 auto; text-align:center; animation:fadeUp 0.5s ease both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+  .page-eyebrow { display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:10px; letter-spacing:0.12em; color:var(--accent2); background:var(--accent-dim); border:1px solid rgba(0,229,160,0.2); padding:4px 12px; border-radius:20px; margin-bottom:20px; }
+  .page-title { font-family:var(--mono); font-size:clamp(22px,3.5vw,36px); font-weight:500; letter-spacing:-0.01em; color:var(--text); margin-bottom:14px; }
+  .page-sub { font-size:14px; color:var(--text2); max-width:540px; margin:0 auto; line-height:1.75; }
+
+  /* ── Content ── */
+  #content { max-width:860px; margin:0 auto; padding:0 24px 80px; }
+  .section { margin-top:56px; animation:fadeUp 0.4s ease both; }
+  .section-label { font-family:var(--mono); font-size:9px; letter-spacing:0.14em; color:var(--accent2); text-transform:uppercase; margin-bottom:12px; }
+  .section-title { font-family:var(--mono); font-size:18px; font-weight:500; letter-spacing:0.02em; color:var(--text); margin-bottom:14px; padding-bottom:14px; border-bottom:1px solid var(--border); }
+
+  /* ── Bio cards ── */
+  .bio-card { background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius); padding:28px; display:flex; gap:24px; margin-bottom:14px; transition:border-color 0.15s; }
+  .bio-card:hover { border-color:var(--border2); }
+  .bio-photo { width:100px; height:100px; border-radius:8px; object-fit:cover; flex-shrink:0; background:var(--bg3); border:1px solid var(--border2); }
+  .bio-photo-placeholder { width:100px; height:100px; border-radius:8px; flex-shrink:0; background:var(--bg3); border:1px solid var(--border2); display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:22px; font-weight:500; color:var(--accent2); }
+  .bio-content { flex:1; min-width:0; }
+  .bio-name { font-family:var(--mono); font-size:14px; font-weight:500; letter-spacing:0.04em; color:var(--text); margin-bottom:4px; }
+  .bio-role { font-family:var(--mono); font-size:10px; letter-spacing:0.08em; color:var(--accent2); margin-bottom:12px; }
+  .bio-body { font-size:13px; color:var(--text2); line-height:1.75; margin-bottom:14px; }
+  .bio-experience { list-style:none; padding:0; display:flex; flex-direction:column; gap:5px; }
+  .bio-experience li { display:flex; gap:8px; font-family:var(--mono); font-size:10px; color:var(--text3); letter-spacing:0.03em; line-height:1.5; }
+  .bio-experience li::before { content:'·'; color:var(--accent2); flex-shrink:0; }
+
+  @media (max-width: 560px) {
+    .bio-card { flex-direction:column; align-items:center; text-align:center; }
+    .bio-experience li { justify-content:center; }
+  }
+
+  /* ── Contact section ── */
+  .contact-card { background:var(--bg2); border:1px solid var(--border); border-left:3px solid var(--accent); border-radius:var(--radius); padding:24px 24px 24px 22px; margin-top:20px; }
+  .contact-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; margin-top:4px; }
+  .contact-item-label { font-family:var(--mono); font-size:9px; letter-spacing:0.1em; color:var(--text3); text-transform:uppercase; margin-bottom:4px; }
+  .contact-item-value { font-size:13px; color:var(--text2); line-height:1.6; }
+  .contact-item-value a { color:var(--accent2); text-decoration:none; border-bottom:1px solid rgba(0,184,122,0.3); }
+  .contact-item-value a:hover { color:var(--accent); }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- Nav -->
+  <div id="site-nav">
+    <div class="site-nav-left">
+      <div class="site-nav-logo">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+          <polyline points="1,12 5,5 9,9 13,4" stroke="#090d12" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="13" cy="4" r="1.8" fill="#090d12"/>
+        </svg>
+      </div>
+      <div class="site-nav-brand">OPEN MIND DATA</div>
+      <div class="site-nav-divider"></div>
+      <div class="site-nav-links">
+        <a href="index.html">HOME</a>
+        <a href="about.html" class="active">ABOUT US</a>
+      </div>
+    </div>
+    <div class="site-nav-right"></div>
+  </div>
+
+  <!-- Page header -->
+  <div id="page-header">
+    <div class="page-eyebrow">OPEN MIND DATA</div>
+    <div class="page-title">About Us</div>
+    <div class="page-sub">A team of financial data veterans building the next generation of alternative datasets for institutional investors.</div>
+  </div>
+
+  <div id="content">
+
+    <!-- Team -->
+    <div class="section">
+      <div class="section-label">THE TEAM</div>
+      <div class="section-title">Founders</div>
+
+      <!-- Greg -->
+      <div class="bio-card">
+        <img class="bio-photo"
+          src="https://lh3.googleusercontent.com/sitesv/AA5AbUBhMEcgzAYobBl-VLGToJLGpeJUFVRqXY3qebRHXCsYYCz5O1hk_sAtZP_mE0iwynyK636xFRx_anULJ2E_gpoFLXGC7DlqD0PwPqVQOBxKz_eJihn-TpGD1Jt2gjJZeTYKM-SOox452O86-rBX58gfTi7KHp1D1hVZMtdxu0MQbJpDMZqsKKpmyqHPSU60N8x5rc6gx9VaL2mCLm-fXe-Oo219Wlwfn8H1=w1280"
+          alt="Greg Sedgwick"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="bio-photo-placeholder" style="display:none;">GS</div>
+        <div class="bio-content">
+          <div class="bio-name">Greg Sedgwick</div>
+          <div class="bio-role">FOUNDER</div>
+          <div class="bio-body">Open Mind Data was founded by Greg Sedgwick, building on extensive experience in equity-market data and investing. Greg's experience ranges from discovering, building and productizing equity-related data — such as corporate fundamentals, earnings estimates and pricing data — to using such data in a systemized trading environment.</div>
+          <ul class="bio-experience">
+            <li>Bridgewater Associates — Research Associate / Investment Engineer / Equity Team</li>
+            <li>Edgar Online — Director of Data Products</li>
+            <li>Reuters — Content Specialist, Corporate Fundamentals</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Alex -->
+      <div class="bio-card">
+        <img class="bio-photo"
+          src="https://lh3.googleusercontent.com/sitesv/AA5AbUDOzFteUGzpwZjecJ1zsWqRUGhhlMZok_IJgOVfDIcenE-CvT5KCLH_QVqvEbi48Pkd7iywwB450Z_w5bFRx_anULJ2E_gpoFLXGC7DlqD0PwPqVQOBxKz_eJihn-TpGD1Jt2gjJZeTYKM-SOox452O86-rBX58gfTi7KHp1D1hVZMtdxu0MQbJpDMZqsKKpmyqHPSU60N8x5rc6gx9VaL2mCLm-fXe-Oo219Wlwfn8H1=w1280"
+          alt="Alex Karavousanos"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="bio-photo-placeholder" style="display:none;">AK</div>
+        <div class="bio-content">
+          <div class="bio-name">Alex Karavousanos</div>
+          <div class="bio-role">CO-FOUNDER</div>
+          <div class="bio-body">Alex is a co-founder of Open Mind Data and a 20+ year business development veteran in the financial services industry. During this time Alex was instrumental in expanding the use of fundamental data, analyst research and business intelligence data, as well as building various products including stock screening applications and independent research reports widely used in the industry. Alex has experience with AI/ML based capabilities and a long track record building mutually beneficial partnerships with financial institutions, brokerage firms, banks, and insurance companies.</div>
+          <ul class="bio-experience">
+            <li>Reuters — Financial Services Business Development</li>
+            <li>S&P Capital IQ — Senior Business Development</li>
+            <li>Value Line — Business Development</li>
+            <li>Edgar Online — Business Development</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="section">
+      <div class="section-label">CONTACT</div>
+      <div class="section-title">Get in touch</div>
+      <div class="contact-card">
+        <div class="contact-grid">
+          <div>
+            <div class="contact-item-label">Company</div>
+            <div class="contact-item-value">Open Mind Data LLC</div>
+          </div>
+          <div>
+            <div class="contact-item-label">Address</div>
+            <div class="contact-item-value">125 Park Ave, 25th Floor<br>New York, NY 10017</div>
+          </div>
+          <div>
+            <div class="contact-item-label">Email</div>
+            <div class="contact-item-value"><a href="mailto:Info@OpenMindData.io">Info@OpenMindData.io</a></div>
+          </div>
+          <div>
+            <div class="contact-item-label">Phone</div>
+            <div class="contact-item-value"><a href="tel:5166849800">516-684-9800</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="padding:12px 16px; text-align:center; font-family:'IBM Plex Mono',monospace; font-size:10px; color:#8a9099; letter-spacing:0.04em; border-top:1px solid rgba(255,255,255,0.07);">
+    Questions? <a href="mailto:Info@OpenMindData.io" style="color:#00b87a; text-decoration:none; border-bottom:1px solid rgba(0,184,122,0.3);">Info@OpenMindData.io</a>
+  </div>
+  <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:#8a9099; letter-spacing:0.04em; margin-top:4px; text-align:center; padding-bottom:12px;">
+    &copy; 2026 Open Mind Data LLC &nbsp;·&nbsp; 125 Park Ave, 25th Floor, New York, NY 10017
+  </div>
+
+</div>
+</body>
+</html>

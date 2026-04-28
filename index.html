@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open Mind Data</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:#090d12; --bg2:#0f1419; --bg3:#161c24; --bg4:#1d2630;
+    --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.13);
+    --accent:#00e5a0; --accent2:#00b87a; --accent-dim:rgba(0,229,160,0.12);
+    --red:#ff4d6d; --red-dim:rgba(255,77,109,0.12);
+    --amber:#f0a500; --amber-dim:rgba(240,165,0,0.12);
+    --blue:#4da6ff; --blue-dim:rgba(77,166,255,0.12);
+    --text:#f0f2f5; --text2:#c8cdd4; --text3:#8a9099;
+    --mono:'IBM Plex Mono',monospace; --sans:'IBM Plex Sans',sans-serif; --radius:10px;
+  }
+  html, body { min-height:100%; background:var(--bg); color:var(--text); font-family:var(--sans); font-size:14px; line-height:1.6; }
+  #app { display:flex; flex-direction:column; min-height:100vh; }
+
+  /* ── Site Nav ── */
+  #site-nav { display:flex; align-items:center; justify-content:space-between; padding:0 16px; height:42px; background:var(--bg2); border-bottom:1px solid rgba(255,255,255,0.1); flex-shrink:0; position:sticky; top:0; z-index:200; }
+  .site-nav-left { display:flex; align-items:center; gap:10px; }
+  .site-nav-logo { width:24px; height:24px; background:var(--accent); border-radius:5px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .site-nav-brand { font-family:var(--mono); font-size:11px; font-weight:500; letter-spacing:0.1em; color:var(--text); white-space:nowrap; }
+  .site-nav-divider { width:1px; height:16px; background:var(--border2); margin:0 6px; }
+  .site-nav-links { display:flex; align-items:center; gap:2px; }
+  .site-nav-links a { font-family:var(--mono); font-size:10px; letter-spacing:0.07em; color:var(--text3); text-decoration:none; padding:4px 9px; border-radius:5px; border:1px solid transparent; transition:color 0.15s,background 0.15s,border-color 0.15s; white-space:nowrap; }
+  .site-nav-links a:hover { color:var(--accent); background:var(--accent-dim); }
+  .site-nav-links a.active { color:var(--accent); background:var(--accent-dim); border-color:rgba(0,229,160,0.22); }
+  .site-nav-right { display:flex; align-items:center; }
+
+  /* ── Hero ── */
+  #hero { padding:72px 24px 64px; max-width:860px; margin:0 auto; text-align:center; animation:fadeUp 0.5s ease both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+  .hero-eyebrow { display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:10px; letter-spacing:0.12em; color:var(--accent2); background:var(--accent-dim); border:1px solid rgba(0,229,160,0.2); padding:4px 12px; border-radius:20px; margin-bottom:28px; }
+  .hero-eyebrow-dot { width:4px; height:4px; background:var(--accent); border-radius:50%; animation:livepulse 2s ease-in-out infinite; }
+  @keyframes livepulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.7)} }
+  .hero-title { font-family:var(--mono); font-size:clamp(26px,4vw,42px); font-weight:500; letter-spacing:-0.01em; line-height:1.2; color:var(--text); margin-bottom:20px; }
+  .hero-title span { color:var(--accent); }
+  .hero-sub { font-size:15px; color:var(--text2); max-width:620px; margin:0 auto 36px; line-height:1.75; }
+  .hero-cta-row { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+  .btn-primary { font-family:var(--mono); font-size:11px; letter-spacing:0.06em; background:var(--accent); color:#090d12; border:none; padding:10px 22px; border-radius:7px; cursor:pointer; font-weight:500; transition:background 0.15s; text-decoration:none; display:inline-block; }
+  .btn-primary:hover { background:var(--accent2); }
+  .btn-secondary { font-family:var(--mono); font-size:11px; letter-spacing:0.06em; background:transparent; color:var(--text2); border:1px solid var(--border2); padding:10px 22px; border-radius:7px; cursor:pointer; transition:border-color 0.15s,color 0.15s,background 0.15s; text-decoration:none; display:inline-block; }
+  .btn-secondary:hover { border-color:rgba(0,229,160,0.35); color:var(--accent); background:var(--accent-dim); }
+
+  /* ── Content ── */
+  #content { max-width:860px; margin:0 auto; padding:0 24px 80px; }
+  .section { margin-top:64px; animation:fadeUp 0.4s ease both; }
+  .section-label { font-family:var(--mono); font-size:9px; letter-spacing:0.14em; color:var(--accent2); text-transform:uppercase; margin-bottom:12px; }
+  .section-title { font-family:var(--mono); font-size:18px; font-weight:500; letter-spacing:0.02em; color:var(--text); margin-bottom:14px; padding-bottom:14px; border-bottom:1px solid var(--border); }
+  .section-body { font-size:14px; color:var(--text2); line-height:1.8; }
+  .section-body p { margin-bottom:12px; }
+  .section-body p:last-child { margin-bottom:0; }
+
+  /* ── Data product cards ── */
+  .product-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(360px,1fr)); gap:10px; margin-top:20px; }
+  .product-card { background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius); padding:22px; transition:border-color 0.15s; display:flex; flex-direction:column; gap:12px; }
+  .product-card:hover { border-color:var(--border2); }
+  .product-card-tag { font-family:var(--mono); font-size:9px; letter-spacing:0.1em; padding:2px 8px; border-radius:4px; display:inline-block; width:fit-content; }
+  .product-card-title { font-family:var(--mono); font-size:13px; font-weight:500; letter-spacing:0.04em; color:var(--text); }
+  .product-card-body { font-size:13px; color:var(--text2); line-height:1.75; flex:1; }
+  .product-card-link { font-family:var(--mono); font-size:10px; letter-spacing:0.06em; color:var(--accent2); text-decoration:none; border-bottom:1px solid rgba(0,184,122,0.3); width:fit-content; transition:color 0.15s; }
+  .product-card-link:hover { color:var(--accent); }
+
+  /* ── Why Now box ── */
+  .highlight-box { background:var(--bg2); border:1px solid var(--border); border-left:3px solid var(--accent); border-radius:var(--radius); padding:24px 24px 24px 22px; margin-top:20px; }
+  .highlight-box p { font-size:14px; color:var(--text2); line-height:1.8; margin-bottom:10px; }
+  .highlight-box p:last-child { margin-bottom:0; }
+
+  /* ── Bullet list ── */
+  .data-list { list-style:none; padding:0; margin-top:14px; display:flex; flex-direction:column; gap:8px; }
+  .data-list li { display:flex; gap:10px; font-size:13px; color:var(--text2); line-height:1.7; }
+  .data-list li::before { content:'—'; font-family:var(--mono); color:var(--accent2); flex-shrink:0; margin-top:1px; }
+
+  /* ── CTA strip ── */
+  #cta-strip { background:var(--bg2); border-top:1px solid var(--border); padding:48px 24px; text-align:center; margin-top:64px; }
+  .cta-title { font-family:var(--mono); font-size:16px; font-weight:500; letter-spacing:0.04em; color:var(--text); margin-bottom:10px; }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- Nav -->
+  <div id="site-nav">
+    <div class="site-nav-left">
+      <div class="site-nav-logo">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+          <polyline points="1,12 5,5 9,9 13,4" stroke="#090d12" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="13" cy="4" r="1.8" fill="#090d12"/>
+        </svg>
+      </div>
+      <div class="site-nav-brand">OPEN MIND DATA</div>
+      <div class="site-nav-divider"></div>
+      <div class="site-nav-links">
+        <a href="index.html" class="active">HOME</a>
+        <a href="about.html">ABOUT US</a>
+      </div>
+    </div>
+    <div class="site-nav-right"></div>
+  </div>
+
+  <!-- Hero -->
+  <div id="hero">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-dot"></div>
+      ALTERNATIVE DATA FOR SERIOUS INVESTORS
+    </div>
+    <div class="hero-title">
+      Discovering the <span>data edge</span><br>before the market does
+    </div>
+    <div class="hero-sub">
+      Open Mind Data identifies, builds, and delivers innovative alternative datasets that give sophisticated investors a measurable information advantage. We don't follow the crowd — we find the signals others miss.
+    </div>
+    <div class="hero-cta-row">
+      <a href="about.html" class="btn-primary">ABOUT US</a>
+      <a href="mailto:Info@OpenMindData.io" class="btn-secondary">GET IN TOUCH</a>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div id="content">
+
+    <!-- What we do -->
+    <div class="section">
+      <div class="section-label">WHAT WE DO</div>
+      <div class="section-title">Alternative data. Institutional quality.</div>
+      <div class="section-body">
+        <p>Founded by veterans of financial data, systematic investing, and business development, Open Mind Data is built on one core belief: the most valuable signals are the ones the market hasn't fully priced in yet. We find those signals, structure them, and deliver them in formats that serious investors can actually use.</p>
+        <p>Our work spans multiple asset classes and data categories — from corporate capital allocation behavior to emerging market intelligence from prediction markets.</p>
+      </div>
+      <div class="highlight-box">
+        <p>With backgrounds spanning Bridgewater Associates, Reuters, S&P Capital IQ, Edgar Online, and Value Line, our team brings decades of experience in financial data discovery, productization, and institutional distribution.</p>
+      </div>
+    </div>
+
+    <!-- Data products -->
+    <div class="section">
+      <div class="section-label">DATA PRODUCTS</div>
+      <div class="section-title">Our datasets</div>
+      <div class="section-body">
+        <p>Each dataset we build starts with a fundamental question: does this data contain information that meaningfully moves markets, and is it underutilized? If the answer is yes, we build the infrastructure to make it accessible.</p>
+      </div>
+      <div class="product-grid">
+
+        <div class="product-card">
+          <div class="product-card-tag" style="background:var(--accent-dim);color:var(--accent2);border:1px solid rgba(0,229,160,0.2);">EQUITY DATA</div>
+          <div class="product-card-title">Stock Buyback Data & Analysis</div>
+          <div class="product-card-body">
+            S&P 500 companies spend hundreds of billions annually on stock buybacks — one of the largest and most consistent sources of equity demand in the market. Yet the data is fragmented, delayed, and underanalyzed.
+            <ul class="data-list" style="margin-top:10px;">
+              <li>Buyback activity as a confidence signal on future prospects</li>
+              <li>Impact on supply/demand dynamics and share price</li>
+              <li>Effects on EPS, ROE, P/E and other key financial ratios</li>
+              <li>Tax efficiency relative to dividend distributions</li>
+            </ul>
+          </div>
+          <a href="mailto:Info@OpenMindData.io" class="product-card-link">REQUEST DATA →</a>
+        </div>
+
+        <div class="product-card">
+          <div class="product-card-tag" style="background:var(--amber-dim);color:var(--amber);border:1px solid rgba(240,165,0,0.2);">SENTIMENT DATA</div>
+          <div class="product-card-title">Market Sentiment Intelligence</div>
+          <div class="product-card-body">
+            Sentiment data that goes beyond social media noise — structured, normalized signals derived from sources with real financial stakes. We identify sentiment shifts before they show up in price action, giving you a window into where conviction is building or unwinding.
+            <ul class="data-list" style="margin-top:10px;">
+              <li>Crowd-sourced probability signals from active traders</li>
+              <li>Cross-platform sentiment aggregation and normalization</li>
+              <li>Event-driven sentiment tracking across macro and micro themes</li>
+            </ul>
+          </div>
+          <a href="mailto:Info@OpenMindData.io" class="product-card-link">REQUEST DATA →</a>
+        </div>
+
+        <div class="product-card" style="border-color:rgba(0,229,160,0.18);">
+          <div class="product-card-tag" style="background:var(--blue-dim);color:var(--blue);border:1px solid rgba(77,166,255,0.2);">PREDICTION MARKETS</div>
+          <div class="product-card-title">Prediction Markets Data</div>
+          <div class="product-card-body">
+            Our dedicated prediction markets data platform aggregates, standardizes, and delivers data from all major prediction market platforms — Polymarket, Kalshi, ForecastEx, and more — through a single, unified API. Implied probabilities, order flow, smart money tracking, cross-platform arbitrage signals, and real-time streaming.
+          </div>
+          <a href="https://www.predictionmarketsdata.net" target="_blank" class="product-card-link">VISIT PREDICTIONMARKETSDATA.NET →</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Why alternative data -->
+    <div class="section">
+      <div class="section-label">OUR APPROACH</div>
+      <div class="section-title">Why alternative data matters now</div>
+      <div class="section-body">
+        <p>Traditional financial data — earnings, fundamentals, analyst estimates — is widely available, well-priced, and fully arbitraged. The edge has shifted to datasets that are harder to find, harder to structure, and harder to interpret.</p>
+        <p>That is precisely where Open Mind Data operates. We bring the discipline of institutional data management to emerging and underutilized data categories, turning raw signals into clean, queryable intelligence that fits into existing investment workflows.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CTA -->
+  <div id="cta-strip">
+    <div class="cta-title">INTERESTED IN OUR DATA?</div>
+    <div style="font-size:13px; color:var(--text3); margin:0 0 2px;">We work directly with hedge funds, quant teams, and institutional investors.</div>
+    <div style="font-family:var(--mono); font-size:10px; color:var(--text3); letter-spacing:0.05em; margin:0 0 24px;">Reach us at <a href="mailto:Info@OpenMindData.io" style="color:var(--accent2); text-decoration:none; border-bottom:1px solid rgba(0,184,122,0.3);">Info@OpenMindData.io</a> &nbsp;·&nbsp; 516-684-9800</div>
+    <div class="hero-cta-row">
+      <a href="mailto:Info@OpenMindData.io" class="btn-primary">CONTACT US</a>
+      <a href="about.html" class="btn-secondary">ABOUT US</a>
+      <a href="https://www.predictionmarketsdata.net" target="_blank" class="btn-secondary">PREDICTION MARKETS DATA</a>
+    </div>
+  </div>
+
+  <div style="padding:12px 16px; text-align:center; font-family:'IBM Plex Mono',monospace; font-size:10px; color:#8a9099; letter-spacing:0.04em; border-top:1px solid rgba(255,255,255,0.07);">
+    Questions? <a href="mailto:Info@OpenMindData.io" style="color:#00b87a; text-decoration:none; border-bottom:1px solid rgba(0,184,122,0.3);">Info@OpenMindData.io</a>
+  </div>
+  <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:#8a9099; letter-spacing:0.04em; margin-top:4px; text-align:center; padding-bottom:12px;">
+    &copy; 2026 Open Mind Data LLC &nbsp;·&nbsp; 125 Park Ave, 25th Floor, New York, NY 10017
+  </div>
+
+</div>
+</body>
+</html>
